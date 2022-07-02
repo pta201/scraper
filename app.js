@@ -1,6 +1,5 @@
 const fs = require("fs");
 const express = require("express");
-const morgan = require("morgan");
 var cors = require("cors");
 
 const productRouter = require("./routes/productRoute");
@@ -14,6 +13,7 @@ app.use(function (req, res, next) {
   );
   next();
 });
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 app.use(express.static(`${__dirname}/public`));
 //Routes
