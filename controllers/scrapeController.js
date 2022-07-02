@@ -1,6 +1,5 @@
 const { scrape } = require("../scrapeModule/puppeteer");
-const puppeteer = require("puppeteer");
-exports.scrape = async (req, res, next) => {
+exports.scrape = async (req, res) => {
   let shopName = req.params.shopName;
   let pageNumber = req.params.pageNumber;
   try {
@@ -14,7 +13,6 @@ exports.scrape = async (req, res, next) => {
         products,
       },
     };
-    console.log(products);
     res.json(responseObject);
   } catch (err) {}
 };

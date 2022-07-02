@@ -1,6 +1,4 @@
 const puppeteer = require("puppeteer");
-const fs = require("fs");
-const path = require("path");
 const { getProductsData } = require("./product/product");
 
 const wsChromeEndpointurl =
@@ -36,6 +34,7 @@ const scrape = (shopName = "babykoi2014", pageNum = 1) => {
         resolve(products);
         reject([]);
       });
+    browser.close();
   });
 };
 async function scrollToBottom(page) {
