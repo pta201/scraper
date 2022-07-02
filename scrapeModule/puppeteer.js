@@ -13,6 +13,7 @@ const scrape = (shopName = "babykoi2014", pageNum = 1) => {
       .launch({
         browserWSEndpoint: wsChromeEndpointurl,
         headless: true,
+        args: ["--no-sandbox"],
       })
       .then(async (browser) => {
         for (let i = 0; i < pageNum; i++) {
