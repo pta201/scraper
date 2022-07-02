@@ -25,8 +25,7 @@ const scrape = (shopName = "babykoi2014", pageNum = 1) => {
 
           // Lấy thông tin các sp trên trang
           try {
-            const res = await getProductsData(html);
-            products.push(...res);
+            products.push(await getProductsData(html));
           } catch (e) {
             console.log("Lỗi rồi: ", e);
           }

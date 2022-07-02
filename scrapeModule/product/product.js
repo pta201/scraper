@@ -1,5 +1,4 @@
 const axios = require("axios").default;
-const fs = require("fs");
 const cheerio = require("cheerio");
 
 const getIDs = (html) => {
@@ -57,7 +56,6 @@ const callApi = async (URLs) => {
       })
       .catch((err) => {});
 
-    console.log("Finished Calling apis");
     return products;
   } catch (err) {
     console.error(err.message);
@@ -70,7 +68,6 @@ const xulyData = (data) => {
     shopId: data.shopid,
     name: data.name,
     image: `https://cf.shopee.vn/file/${data.image}`,
-
     priceRange: {
       priceMin: data.price_min / 100000,
       priceMax: data.price_max / 100000,
