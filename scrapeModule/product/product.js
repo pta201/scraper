@@ -1,5 +1,6 @@
 const axios = require("axios").default;
 const cheerio = require("cheerio");
+const { headers } = require("../../../web/next.config");
 
 const getIDs = (html) => {
   let IDs = [];
@@ -32,6 +33,7 @@ const getProductsData = async (html) => {
 };
 
 const callApi = async (URLs) => {
+  console.log("Calling APIS");
   try {
     const products = [];
     const config = {
@@ -42,20 +44,24 @@ const callApi = async (URLs) => {
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36",
         "sec-ch-ua-platform": "Windows",
         accept: `text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9`,
-        cookie: `REC_T_ID=e554f741-cd10-11ec-b940-b47af14b47cc; G_ENABLED_IDPS=google; SPC_F=144Nx0HbyoXnyJv1fnyJ3suFyrjtl3Xs; REC_T_ID=5f45bfc2-d3fd-11ec-a30b-923133c4ad2a; SC_DFP=2Gfvxp9jNFUSbVoJol5Q8cUFXQIdROcz; __LOCALE__null=VN; csrftoken=FtusPaVC2koOgBXJujeoFrISdAHbQVju; _QPWSDCXHZQA=ab4ee087-69af-49eb-ba6e-846fc1efeb6e; SPC_CLIENTID=MTQ0TngwSGJ5b1huiwrslgghyvzhqqrl; SPC_ST=.VUR2NzBaeHQ3dXRla3M3SZWfNkinaBzfi/m6Ku5dmqWAaDKR7qj/OKPOwEqVCy5QaatbMH+YpdsB8+5f4eO4iQteQXw3W8vLeOxVmTIG0dDhF6lUbnQACbGhSAOIKbu0J+jZi5vFjQwhxQviy4fmSdUQONQia8nwELxhr7fenFg1/bYe8g1yxXzgSyDBrThaSmmyNkzd7/9SzqGoVlw3BQ==; SPC_U=26438394; SPC_T_ID="0iFlSs4+2/BNRdnrQPfjZ8xR9WsgWxHUcL0eNvOLwAz2Zh49ve0WZba96CrQDClGeFnDTVOY42inEp0hoRZwbbvKh2xHO96o9L7frK6jmpg="; SPC_T_IV="KgNSxITgUtL+VAXcsbDSxg=="; SPC_R_T_ID=0iFlSs4+2/BNRdnrQPfjZ8xR9WsgWxHUcL0eNvOLwAz2Zh49ve0WZba96CrQDClGeFnDTVOY42inEp0hoRZwbbvKh2xHO96o9L7frK6jmpg=; SPC_R_T_IV=KgNSxITgUtL+VAXcsbDSxg==; SPC_T_ID=0iFlSs4+2/BNRdnrQPfjZ8xR9WsgWxHUcL0eNvOLwAz2Zh49ve0WZba96CrQDClGeFnDTVOY42inEp0hoRZwbbvKh2xHO96o9L7frK6jmpg=; SPC_T_IV=KgNSxITgUtL+VAXcsbDSxg==; SPC_SI=KQy8YgAAAABCUnpYcDJDeY6LLQAAAAAAYVJpcWNsWXo=; SPC_IA=1; shopee_webUnique_ccd=7rCdUqHtj6ihE3nLbvDPUg==|hg29tsyGnQKueFdxCtPgLPBorTTDIdbNiOTEp92Qf0mx7FI6tG+Nu/5sKNdpmWuBm7BRvUEzZjKUQvs6AANuUvV18pQ=|HwqwdKkRg2orETgq|05|3; SPC_EC=SmJnaFdXSzFsS1dVRUhvN9kYOgxdsAVOmIXwspmARMCAd7f88K32Ko5/PzBgIOCIIxWMXfm07Ki5v8s40KJfhLXjXPCt1qBKqPNerBjHqucJ2FdFPWahuP/miHtHOzc2w809FTVuMhaQNYtihx4ZPCHuk7zTTTXigpjX3nTk75M=`,
+        cookie: `REC_T_ID=e554f741-cd10-11ec-b940-b47af14b47cc; G_ENABLED_IDPS=google; SPC_F=144Nx0HbyoXnyJv1fnyJ3suFyrjtl3Xs; REC_T_ID=5f45bfc2-d3fd-11ec-a30b-923133c4ad2a; SC_DFP=2Gfvxp9jNFUSbVoJol5Q8cUFXQIdROcz; SPC_CLIENTID=MTQ0TngwSGJ5b1huiwrslgghyvzhqqrl; SPC_ST=.VUR2NzBaeHQ3dXRla3M3SZWfNkinaBzfi/m6Ku5dmqWAaDKR7qj/OKPOwEqVCy5QaatbMH+YpdsB8+5f4eO4iQteQXw3W8vLeOxVmTIG0dDhF6lUbnQACbGhSAOIKbu0J+jZi5vFjQwhxQviy4fmSdUQONQia8nwELxhr7fenFg1/bYe8g1yxXzgSyDBrThaSmmyNkzd7/9SzqGoVlw3BQ==; SPC_U=26438394; __LOCALE__null=VN; csrftoken=97ZS298uQWsLfkbr1udoIFm2qpT0zpli; SPC_T_IV="hh4c6ltVrNNKKq4I+LaROA=="; SPC_T_ID="aq1UkXGqMMNxd8Q0UKz3KuKu9hBxX21d+4yrexiuRh4Xz/3XPbHnCCLEyIOIkU9i3o/0dFcxXo4QvCSR08MddcD5siHKjgkZtZEP9s5Byf0="; SPC_R_T_ID=aq1UkXGqMMNxd8Q0UKz3KuKu9hBxX21d+4yrexiuRh4Xz/3XPbHnCCLEyIOIkU9i3o/0dFcxXo4QvCSR08MddcD5siHKjgkZtZEP9s5Byf0=; SPC_R_T_IV=hh4c6ltVrNNKKq4I+LaROA==; SPC_T_ID=aq1UkXGqMMNxd8Q0UKz3KuKu9hBxX21d+4yrexiuRh4Xz/3XPbHnCCLEyIOIkU9i3o/0dFcxXo4QvCSR08MddcD5siHKjgkZtZEP9s5Byf0=; SPC_T_IV=hh4c6ltVrNNKKq4I+LaROA==; SPC_SI=KQy8YgAAAABCUnpYcDJDeY6LLQAAAAAAYVJpcWNsWXo=; _QPWSDCXHZQA=ab4ee087-69af-49eb-ba6e-846fc1efeb6e; SPC_IA=1; shopee_webUnique_ccd=szJL+/v32rjWkUXNY9RlGQ==|+X9oQFaR/D49y+M/DU1MS0KuiNWW3GVUIFv25WTOXASrFGLRLiAJ80CnlqGP/+Y8E1XoQOj38pvu94Njnr8njP3t|iBy6A+DxUYbI5qPn|05|3; SPC_EC=OGhFdDdDRDFvWXZ0REFxWtrcjmxRPaYHjBzOUQ2uOHF8yYpPC/slMrn8/ZzKOO6JW9p/8OFnpIYRuYQak225+EMR70kjNLvGjOQzOL1UAd/FWnnBX9KxBWZzy3ZY1sfeWwyN5h9R8X4AG7q10ZATRji33T/wjFD9uFUG1rGQh44=`,
       },
     };
     const promises = URLs.map((url) => {
       return axios.get(url, config);
     });
+    // console.log("Called! Waiting for promises");
     await Promise.allSettled(promises)
       .then((result) => {
         for (let i = 0; i < result.length - 1; i++) {
           products.push(xulyData(result[i].value.data.data));
         }
+        // headers
       })
-      .catch((err) => {});
-
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(products.length);
     return products;
   } catch (err) {
     console.error(err.message);

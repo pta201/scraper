@@ -25,15 +25,18 @@ const scrape = (shopName = "babykoi2014", pageNum = 1) => {
 
           // Lấy thông tin các sp trên trang
           try {
-            products.push(await getProductsData(html));
+            const res = await getProductsData(html);
+            console.log(res);
+            products.push(...res);
           } catch (e) {
             console.log("Lỗi rồi: ", e);
           }
         }
+        // console.log(products);
         resolve(products);
         reject([]);
       });
-    browser.close();
+    // browser.close();
   });
 };
 async function scrollToBottom(page) {
